@@ -7,11 +7,11 @@ class MaterialItemSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = MaterialItem
-        fields = ['id', 'application', 'name', 'material_type', 
+        fields = ['id', 'application', 'name', 'material_type',
                   'material_type_display', 'description', 'is_required',
-                  'is_completed', 'file', 'uploaded_by', 'uploaded_by_name',
+                  'is_completed', 'is_locked', 'file', 'uploaded_by', 'uploaded_by_name',
                   'uploaded_at', 'notes', 'created_at', 'updated_at']
-        read_only_fields = ['id', 'uploaded_by', 'uploaded_at', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'is_locked', 'uploaded_by', 'uploaded_at', 'created_at', 'updated_at']
 
 class MaterialTemplateSerializer(serializers.ModelSerializer):
     material_type_display = serializers.CharField(source='get_material_type_display', read_only=True)

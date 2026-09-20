@@ -70,6 +70,72 @@ export interface Program {
   degree_level_display: string;
   department: string;
   tuition: number | null;
+  deadlines?: ApplicationDeadline[];
+}
+
+export interface ApplicationDeadline {
+  id: number;
+  program: number;
+  round_name: string;
+  round_name_display: string;
+  deadline_date: string;
+  decision_release_date: string | null;
+  notes: string;
+}
+
+export interface SubmissionSnapshot {
+  id: number;
+  application: number;
+  snapshot_no: number;
+  status: 'active' | 'rolled_back';
+  status_display: string;
+  previous_status: string;
+  previous_status_display: string;
+  application_round: number | null;
+  application_round_name: string;
+  application_round_deadline: string | null;
+  ps_document: number | null;
+  ps_document_title: string;
+  ps_version: number | null;
+  ps_version_number: number | null;
+  ps_content: string;
+  ps_word_count: number;
+  ps_change_note: string;
+  materials_snapshot: SnapshotMaterial[];
+  submitted_by: number | null;
+  submitted_by_name: string | null;
+  submitted_at: string;
+  rolled_back_by: number | null;
+  rolled_back_by_name: string | null;
+  rolled_back_at: string | null;
+  rollback_reason: string;
+  created_at: string;
+}
+
+export interface SnapshotMaterial {
+  id: number;
+  name: string;
+  material_type: string;
+  material_type_display: string;
+  description: string;
+  is_required: boolean;
+  is_completed: boolean;
+  file: string | null;
+  uploaded_by: string | null;
+  uploaded_at: string | null;
+  notes: string;
+}
+
+export interface BlockingItem {
+  type: 'material' | 'ps' | 'round';
+  message: string;
+}
+
+export interface SubmissionCheckResult {
+  can_submit: boolean;
+  already_submitted: boolean;
+  blocking_items: BlockingItem[];
+  snapshot: SubmissionSnapshot | null;
 }
 
 export interface ApplicationProject {
@@ -89,6 +155,8 @@ export interface ApplicationProject {
   submitted_at: string | null;
   result_date: string | null;
   materials_progress: number;
+  submission_locked: boolean;
+  current_snapshot: SubmissionSnapshot | null;
   status_history: StatusChangeHistory[];
   created_at: string;
   updated_at: string;
@@ -164,6 +232,7 @@ export interface MaterialItem {
   description: string;
   is_required: boolean;
   is_completed: boolean;
+  is_locked: boolean;
   file: string | null;
   uploaded_by: number | null;
   uploaded_by_name: string | null;

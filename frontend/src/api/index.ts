@@ -80,10 +80,16 @@ export const applicationAPI = {
   getApplication: (id: number) => api.get(`/applications/projects/${id}/`),
   createApplication: (data: any) => api.post('/applications/projects/', data),
   updateApplication: (id: number, data: any) => api.put(`/applications/projects/${id}/`, data),
+  patchApplication: (id: number, data: any) => api.patch(`/applications/projects/${id}/`, data),
   deleteApplication: (id: number) => api.delete(`/applications/projects/${id}/`),
   changeStatus: (id: number, data: { status: string; reason?: string }) =>
     api.post(`/applications/projects/${id}/change_status/`, data),
   getStatusHistory: (id: number) => api.get(`/applications/projects/${id}/status_history/`),
+  getSubmissionCheck: (id: number) => api.get(`/applications/projects/${id}/submission_check/`),
+  submitApplication: (id: number) => api.post(`/applications/projects/${id}/submit/`),
+  rollbackSubmission: (id: number, data: { reason: string }) =>
+    api.post(`/applications/projects/${id}/rollback_submission/`, data),
+  getSnapshots: (id: number) => api.get(`/applications/projects/${id}/snapshots/`),
 };
 
 export const documentAPI = {

@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'documents',
     'materials',
     'timelines',
-    'messages',
+    'messages.apps.MessagesConfig',
     'analytics',
 ]
 

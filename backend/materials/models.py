@@ -28,6 +28,7 @@ class MaterialItem(models.Model):
     description = models.TextField('材料说明', blank=True)
     is_required = models.BooleanField('是否必需', default=True)
     is_completed = models.BooleanField('是否已完成', default=False)
+    is_locked = models.BooleanField('是否已随递交锁定', default=False)
     file = models.FileField('上传文件', upload_to='materials/', blank=True, null=True)
     uploaded_by = models.ForeignKey(
         'users.CustomUser',
