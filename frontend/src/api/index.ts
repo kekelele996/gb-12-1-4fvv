@@ -84,6 +84,21 @@ export const applicationAPI = {
   changeStatus: (id: number, data: { status: string; reason?: string }) =>
     api.post(`/applications/projects/${id}/change_status/`, data),
   getStatusHistory: (id: number) => api.get(`/applications/projects/${id}/status_history/`),
+
+  // —— 申请递交锁定 ——
+  getSubmissionBlockers: (id: number) =>
+    api.get(`/applications/projects/${id}/submission/blockers/`),
+  submit: (id: number) =>
+    api.post(`/applications/projects/${id}/submission/submit/`),
+  rollback: (id: number, reason: string) =>
+    api.post(`/applications/projects/${id}/submission/rollback/`, { reason }),
+  getSubmissionSnapshots: (id: number) =>
+    api.get(`/applications/projects/${id}/submission/snapshots/`),
+};
+
+export const submissionAPI = {
+  getSnapshots: (params?: any) => api.get('/submissions/snapshots/', { params }),
+  getSnapshot: (id: number) => api.get(`/submissions/snapshots/${id}/`),
 };
 
 export const documentAPI = {

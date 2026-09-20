@@ -27,8 +27,9 @@ INSTALLED_APPS = [
     'documents',
     'materials',
     'timelines',
-    'messages',
+    'messages.apps.ChatMessagesConfig',
     'analytics',
+    'submissions',
 ]
 
 MIDDLEWARE = [

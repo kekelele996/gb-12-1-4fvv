@@ -13,4 +13,5 @@ urlpatterns = [
     path('api/timelines/', include('timelines.urls')),
     path('api/messages/', include('messages.urls')),
     path('api/analytics/', include('analytics.urls')),
+    path('api/submissions/', include('submissions.urls')),
 ]

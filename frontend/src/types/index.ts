@@ -61,6 +61,16 @@ export interface University {
   updated_at: string;
 }
 
+export interface ApplicationDeadline {
+  id: number;
+  program: number;
+  round_name: string;
+  round_name_display: string;
+  deadline_date: string;
+  decision_release_date: string | null;
+  notes: string;
+}
+
 export interface Program {
   id: number;
   university: number;
@@ -70,6 +80,7 @@ export interface Program {
   degree_level_display: string;
   department: string;
   tuition: number | null;
+  deadlines?: ApplicationDeadline[];
 }
 
 export interface ApplicationProject {
@@ -81,17 +92,106 @@ export interface ApplicationProject {
   program: number;
   program_name: string;
   application_round: number | null;
+  application_round_name?: string | null;
+  application_round_deadline?: string | null;
   status: string;
   status_display: string;
   notes: string;
   application_fee: number | null;
   fee_paid: boolean;
+  is_submission_locked: boolean;
   submitted_at: string | null;
   result_date: string | null;
   materials_progress: number;
   status_history: StatusChangeHistory[];
+  active_snapshot?: SubmissionSnapshot | null;
+  submission_blockers?: SubmissionBlocker[];
   created_at: string;
   updated_at: string;
+}
+
+export interface SubmissionBlockerRef {
+  id?: number;
+  name?: string;
+  title?: string;
+  material_type?: string;
+  version_number?: number;
+  round_name?: string;
+  deadline_date?: string;
+}
+
+export interface SubmissionBlocker {
+  code:
+    | 'required_material_incomplete'
+    | 'ps_missing'
+    | 'ps_version_missing'
+    | 'ps_unresolved_comment'
+    | 'application_round_missing'
+    | 'application_round_closed';
+  message: string;
+  materials?: SubmissionBlockerRef[];
+  ps_document?: SubmissionBlockerRef;
+  ps_version?: SubmissionBlockerRef;
+  unresolved_count?: number;
+  comment_ids?: number[];
+  application_round?: SubmissionBlockerRef;
+}
+
+export interface SubmissionBlockersResult {
+  is_submission_locked: boolean;
+  blocked: boolean;
+  blockers: SubmissionBlocker[];
+  active_snapshot: SubmissionSnapshot | null;
+}
+
+export interface SubmissionSnapshotMaterial {
+  id: number;
+  material: number | null;
+  name: string;
+  material_type: string;
+  material_type_display: string;
+  description: string;
+  is_required: boolean;
+  is_completed: boolean;
+  file_name: string;
+  file_url: string;
+  uploaded_by_name: string;
+  uploaded_at: string | null;
+}
+
+export interface SubmissionSnapshot {
+  id: number;
+  application: number;
+  is_active: boolean;
+  from_status: string;
+  to_status: string;
+  ps_document: number | null;
+  ps_version: number | null;
+  ps_title: string;
+  ps_version_number: number | null;
+  ps_content: string;
+  ps_word_count: number;
+  application_round: number | null;
+  application_round_name: string;
+  application_round_deadline: string | null;
+  submitted_by: number | null;
+  submitted_by_name: string;
+  submitted_at: string;
+  rolled_back_at: string | null;
+  rolled_back_by: number | null;
+  rolled_back_by_name: string | null;
+  rollback_reason: string;
+  restored_status: string;
+  materials: SubmissionSnapshotMaterial[];
+  materials_count?: number;
+  created_at: string;
+}
+
+export interface SubmissionSubmitResult {
+  detail: string;
+  created: boolean;
+  application: ApplicationProject;
+  snapshot: SubmissionSnapshot;
 }
 
 export interface StatusChangeHistory {
@@ -164,6 +264,7 @@ export interface MaterialItem {
   description: string;
   is_required: boolean;
   is_completed: boolean;
+  is_locked: boolean;
   file: string | null;
   uploaded_by: number | null;
   uploaded_by_name: string | null;

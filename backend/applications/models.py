@@ -53,6 +53,7 @@ class ApplicationProject(models.Model):
     notes = models.TextField('备注', blank=True)
     application_fee = models.DecimalField('申请费', max_digits=10, decimal_places=2, null=True, blank=True)
     fee_paid = models.BooleanField('申请费已缴纳', default=False)
+    is_submission_locked = models.BooleanField('递交锁定', default=False)
     submitted_at = models.DateTimeField('提交时间', null=True, blank=True)
     result_date = models.DateTimeField('结果公布时间', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -72,6 +73,10 @@ class ApplicationProject(models.Model):
             return 0
         completed = self.materials.filter(is_completed=True).count()
         return int((completed / total) * 100)
+
+    def active_snapshot(self):
+        """当前生效的递交快照（未被回退的）。无快照时返回 None。"""
+        return self.submission_snapshots.filter(rolled_back_at__isnull=True).first()
 
 class StatusChangeHistory(models.Model):
     application = models.ForeignKey(
