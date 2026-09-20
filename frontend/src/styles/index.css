@@ -1,0 +1,65 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f0f2f5;
+}
+
+.ant-layout {
+  min-height: 100vh;
+}
+
+.ant-layout-sider {
+  background: #001529 !important;
+}
+
+.ant-menu-dark .ant-menu-item-selected {
+  background-color: #1890ff !important;
+}
+
+.logo {
+  height: 64px;
+  margin: 0;
+  padding: 0 24px;
+  line-height: 64px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.page-header {
+  margin-bottom: 24px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.document-editor {
+  min-height: 400px;
+}
+
+.timeline-container {
+  padding: 20px;
+}
+
+.progress-card {
+  text-align: center;
+  padding: 20px;
+}
